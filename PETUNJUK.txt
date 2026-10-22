@@ -1,0 +1,35 @@
+DAILY ENGLISH — PWA UNTUK IPHONE
+=================================
+
+ISI PAKET
+- index.html: aplikasi asli yang dipertahankan dan disiapkan untuk PWA
+- manifest.webmanifest: nama, tampilan, ikon aplikasi
+- sw.js: cache file inti agar aplikasi dapat membuka tampilan dasar saat offline
+- icons/: ikon aplikasi
+
+PENTING
+Paket ini belum dipublikasikan ke internet. Agar bisa dipasang dari iPhone sebagai aplikasi web, unggah SEMUA isi folder ini ke hosting yang memberikan HTTPS. Jangan hanya mengunggah index.html saja. Tidak perlu membeli domain dulu jika memakai alamat gratis dari layanan hosting.
+
+CARA MEMASANG DI IPHONE SETELAH DIPUBLIKASIKAN
+1. Buka URL HTTPS aplikasi di Safari.
+2. Tekan tombol Share/Bagikan.
+3. Pilih "Add to Home Screen" / "Tambahkan ke Layar Utama".
+4. Jika muncul pilihan "Open as Web App", aktifkan.
+5. Tekan Add/Tambahkan, lalu buka ikon Daily English di layar utama.
+
+FITUR YANG DIPERTAHANKAN
+- Pertanyaan harian dan terjemahan pertanyaan
+- Audio pengucapan pertanyaan dan kalimat contoh
+- Bicara dalam bahasa Indonesia untuk ditranskripsikan dan diterjemahkan (dukungan browser diperlukan)
+- Kolom jawaban dan pemeriksaan sederhana
+- Progres dan riwayat tersimpan lokal di browser/perangkat
+
+BATASAN VERSI INI
+- Koreksi grammar masih berupa umpan balik sederhana, bukan pemeriksaan AI yang mendalam.
+- Terjemahan memerlukan internet dan layanan terjemahan eksternal.
+- Dukungan mikrofon bergantung pada iOS/browser, izin mikrofon, dan koneksi aman HTTPS.
+- Riwayat tersimpan di perangkat ini, belum tersinkron ke perangkat lain.
+- Cache offline menyimpan file aplikasi, tetapi terjemahan dan mikrofon mungkin tidak bekerja tanpa internet.
+
+UNTUK PUBLIKASI
+Unggah folder berisi index.html, manifest.webmanifest, sw.js, dan icons ke hosting statis HTTPS. Setelah deploy, uji URL HTTPS di iPhone sebelum menambahkan ke layar utama.

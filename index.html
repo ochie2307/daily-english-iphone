@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f3ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Daily English">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>Daily English</title>
+<style>
+:root{--bg:#f7f3ec;--card:#fffdf9;--ink:#282820;--muted:#77776d;--green:#486b56;--line:#e8e2d7;--gold:#d9b777}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:560px;margin:auto;padding:20px 16px 40px}.top{display:flex;justify-content:space-between;align-items:center;margin:8px 0 22px}.brand{font-size:12px;letter-spacing:2px;color:var(--green);font-weight:800}.streak{background:#fff9ed;border:1px solid var(--line);padding:8px 11px;border-radius:99px;font-size:13px}
+h1{font-size:30px;letter-spacing:-.8px;margin:5px 0 8px}.sub{color:var(--muted);line-height:1.5;margin:0 0 22px}.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;margin-bottom:14px;box-shadow:0 5px 18px #493b1908}.eyebrow{font-size:11px;letter-spacing:1.4px;color:var(--green);font-weight:800}.question{font-size:25px;line-height:1.25;margin:12px 0}.translation{color:var(--muted);margin:0 0 16px}.row{display:flex;gap:10px}.btn{border:0;border-radius:14px;padding:13px 15px;font-size:15px;font-weight:700;cursor:pointer;min-height:48px}.primary{background:var(--green);color:white;flex:1}.secondary{background:#f0eee7;color:var(--ink)}.outline{border:1px solid var(--line);background:white;color:var(--ink)}textarea{width:100%;min-height:92px;border:1px solid var(--line);border-radius:14px;padding:14px;font:16px inherit;resize:vertical;background:white;color:var(--ink);margin:10px 0 12px}label{font-size:13px;font-weight:700}button:disabled{opacity:.55}.hint{font-size:13px;line-height:1.5;color:var(--muted);margin-top:12px}.result{display:none;margin-top:15px;padding:15px;background:#f1f5ef;border-radius:15px;line-height:1.55}.result strong{display:block;margin-bottom:5px}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}.tab{border:1px solid var(--line);background:transparent;padding:12px;border-radius:12px;font-weight:700;color:var(--muted)}.tab.active{background:var(--card);color:var(--green);border-color:#b6c6b8}.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:#f6f3ec;border-radius:14px;padding:13px 10px}.num{font-size:24px;font-weight:800}.caption{font-size:12px;color:var(--muted);margin-top:4px}.history{padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:1.45}.history:last-child{border:0}.small{font-size:12px;color:var(--muted)}.status{font-size:13px;margin-top:9px;color:var(--green);min-height:18px}.foot{font-size:12px;line-height:1.55;color:var(--muted);text-align:center;padding:12px}
+</style>
+</head>
+<body><main>
+<div class="top"><div class="brand">DAILY ENGLISH</div><div class="streak">✨ <span id="streak">0</span> hari latihan</div></div>
+<h1>Small steps, every day.</h1><p class="sub">Latihan bahasa Inggris dasar lewat percakapan sehari-hari. Salah tidak apa-apa—yang penting berani mencoba.</p>
+<div class="tabs"><button class="tab active" id="learnTab">Latihan hari ini</button><button class="tab" id="progressTab">Progres belajar</button></div>
+<section id="learn">
+<div class="card">
+<div class="eyebrow" id="dayLabel">PERTANYAAN HARI INI</div><div class="question" id="question">What did you do today?</div><p class="translation" id="meaning">Apa yang kamu lakukan hari ini?</p>
+<div class="row"><button class="btn secondary" id="speakQuestion">🔊 Dengarkan</button><button class="btn secondary" id="hintBtn">💡 Petunjuk</button></div>
+<p class="hint" id="hint" hidden>Mulai dengan “Today, I…” lalu ceritakan satu atau dua kegiatan.</p>
+</div>
+<div class="card">
+<label for="answer">JAWAB DALAM BAHASA INGGRIS</label>
+<textarea id="answer" placeholder="Contoh: Today, I went to work..."></textarea>
+<div class="row"><button class="btn outline" id="micBtn">🎙️ Bicara Indonesia</button><button class="btn primary" id="checkBtn">Periksa jawaban</button></div>
+<div class="status" id="status" aria-live="polite"></div>
+<div class="result" id="result"></div>
+<p class="hint">Belum tahu bahasa Inggrisnya? Tekan <b>Bicara Indonesia</b>, izinkan akses mikrofon, lalu ucapkan jawabanmu. Hasil transkripsi akan diterjemahkan.</p>
+</div>
+<div class="card"><div class="eyebrow">KALIMAT YANG BERGUNA</div><div id="phrase" style="font-size:19px;font-weight:700;margin:10px 0">I usually start my day with a cup of coffee.</div><div id="phraseMeaning" class="small">Saya biasanya memulai hari dengan secangkir kopi.</div><button class="btn secondary" id="speakPhrase" style="margin-top:12px">🔊 Dengarkan kalimat</button></div>
+</section>
+<section id="progress" hidden>
+<div class="card"><div class="eyebrow">PERJALANANMU</div><h2 style="margin:10px 0 16px">Terus berlatih 🌱</h2><div class="statgrid"><div class="stat"><div class="num" id="daysStat">0</div><div class="caption">Hari latihan</div></div><div class="stat"><div class="num" id="answersStat">0</div><div class="caption">Jawaban</div></div><div class="stat"><div class="num" id="wordsStat">0</div><div class="caption">Kata dicoba</div></div></div></div>
+<div class="card"><div class="eyebrow">RIWAYAT LATIHAN</div><div id="history"><p class="small">Belum ada latihan. Jawab pertanyaan pertamamu hari ini!</p></div><button class="btn outline" id="clearHistory" style="margin-top:12px">Hapus riwayat di perangkat ini</button></div>
+</section>
+<div class="foot">Versi pertama · Progres tersimpan di browser iPhone ini. Terjemahan membutuhkan koneksi internet.</div>
+</main>
+<script>
+const qs=[
+["What did you do today?","Apa yang kamu lakukan hari ini?","Mulai dengan “Today, I…” lalu ceritakan satu atau dua kegiatan.","I usually start my day with a cup of coffee.","Saya biasanya memulai hari dengan secangkir kopi."],
+["What do you usually eat for breakfast?","Apa yang biasanya kamu makan untuk sarapan?","Mulai dengan “I usually eat…” dan sebutkan makanan.","I usually have eggs and toast for breakfast.","Saya biasanya sarapan telur dan roti panggang."],
+["What do you like to do in your free time?","Apa yang suka kamu lakukan saat waktu luang?","Mulai dengan “In my free time, I like to…”","In my free time, I like to watch movies.","Saat waktu luang, saya suka menonton film."],
+["How was your day at work?","Bagaimana harimu di tempat kerja?","Kamu bisa mulai dengan “My day was…” seperti good, busy, atau tiring.","Today was a busy day, but I learned something new.","Hari ini sibuk, tetapi saya belajar sesuatu yang baru."],
+["What kind of food do you like?","Kamu suka makanan seperti apa?","Mulai dengan “I like…” dan jelaskan alasannya menggunakan “because”.","I like spicy food because it has a lot of flavor.","Saya suka makanan pedas karena rasanya kaya."],
+["What are you going to do tomorrow?","Apa yang akan kamu lakukan besok?","Gunakan “I’m going to…” untuk rencana.","I’m going to work and meet a friend tomorrow.","Besok saya akan bekerja dan bertemu teman."],
+["Where do you like to go on weekends?","Kamu suka pergi ke mana saat akhir pekan?","Mulai dengan “On weekends, I like to go to…”","On weekends, I like to visit a coffee shop.","Saat akhir pekan, saya suka mengunjungi kedai kopi."]
+];
+const today=new Date(), dayIndex=Math.floor(Date.UTC(today.getFullYear(),today.getMonth(),today.getDate())/86400000)%qs.length;
+const q=qs[dayIndex]; const $=id=>document.getElementById(id);
+let history=JSON.parse(localStorage.getItem("dailyEnglishHistory")||"[]");
+function renderQuestion(){ $("question").textContent=q[0];$("meaning").textContent=q[1];$("hint").textContent=q[2];$("phrase").textContent=q[3];$("phraseMeaning").textContent=q[4];$("dayLabel").textContent="PERTANYAAN HARI INI · "+today.toLocaleDateString("id-ID",{day:"numeric",month:"long"}); }
+function say(text,lang="en-US"){if(!("speechSynthesis" in window)){setStatus("Audio tidak didukung browser ini.");return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=.88;speechSynthesis.speak(u)}
+function setStatus(t){$("status").textContent=t}
+function save(){localStorage.setItem("dailyEnglishHistory",JSON.stringify(history));renderProgress()}
+function renderProgress(){const days=new Set(history.map(x=>x.date)).size;$("streak").textContent=days;$("daysStat").textContent=days;$("answersStat").textContent=history.length;$("wordsStat").textContent=history.reduce((a,x)=>a+(x.answer.trim().match(/\S+/g)||[]).length,0);$("history").innerHTML=history.length?history.slice().reverse().slice(0,20).map(x=>`<div class="history"><b>${escapeHtml(x.question)}</b><div>${escapeHtml(x.answer)}</div><div class="small">${escapeHtml(x.date)}${x.translation?" · Terjemahan tersedia":""}</div></div>`).join(""):'<p class="small">Belum ada latihan. Jawab pertanyaan pertamamu hari ini!</p>'}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+$("speakQuestion").onclick=()=>say(q[0]);$("speakPhrase").onclick=()=>say(q[3]);$("hintBtn").onclick=()=>{$("hint").hidden=!$("hint").hidden};
+$("learnTab").onclick=()=>{$("learn").hidden=false;$("progress").hidden=true;$("learnTab").classList.add("active");$("progressTab").classList.remove("active")};
+$("progressTab").onclick=()=>{$("learn").hidden=true;$("progress").hidden=false;$("progressTab").classList.add("active");$("learnTab").classList.remove("active");renderProgress()};
+$("micBtn").onclick=()=>{const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){setStatus("Pengenalan suara belum tersedia di browser ini. Coba buka melalui Safari terbaru, atau ketik jawaban bahasa Indonesia di kotak jawaban lalu tekan Periksa jawaban.");return}const rec=new SR();rec.lang="id-ID";rec.interimResults=false;rec.maxAlternatives=1;setStatus("Mendengarkan… Silakan bicara dalam bahasa Indonesia.");$("micBtn").disabled=true;rec.onresult=e=>{$("answer").value=e.results[0][0].transcript;setStatus("Suara berhasil ditangkap. Menerjemahkan…");translateText(e.results[0][0].transcript)};rec.onerror=e=>setStatus("Mikrofon tidak berhasil digunakan ("+e.error+"). Periksa izin mikrofon atau ketik jawaban.");rec.onend=()=>{$("micBtn").disabled=false};rec.start()};
+async function translateText(text){try{const url="https://api.mymemory.translated.net/get?q="+encodeURIComponent(text)+"&langpair=id|en";const r=await fetch(url);if(!r.ok)throw Error("translate");const d=await r.json();const tr=d.responseData&&d.responseData.translatedText;if(!tr)throw Error("empty");$("answer").value=tr;showResult("Terjemahan bahasa Inggris",tr,"Diterjemahkan dari: “"+text+"”");setStatus("Terjemahan selesai. Dengarkan lalu coba ucapkan kembali.");say(tr)}catch(e){setStatus("Terjemahan otomatis gagal. Periksa koneksi internet, atau ketik jawaban bahasa Inggris sendiri.");}}
+function showResult(title,body,extra=""){const r=$("result");r.style.display="block";r.innerHTML="<strong>"+escapeHtml(title)+"</strong><div>"+escapeHtml(body)+"</div>"+(extra?'<p class="small">'+escapeHtml(extra)+"</p>":"")+'<button class="btn secondary" id="listenResult" style="margin-top:10px">🔊 Dengarkan</button>'; $("listenResult").onclick=()=>say(body)}
+$("checkBtn").onclick=async()=>{const a=$("answer").value.trim();if(!a){setStatus("Isi jawaban atau gunakan tombol mikrofon terlebih dahulu.");return}const date=today.toLocaleDateString("id-ID");const existing=history.findIndex(x=>x.date===date&&x.question===q[0]);const item={date,question:q[0],answer:a};if(existing>=0)history[existing]=item;else history.push(item);save();let note="Coba gunakan kalimat lengkap dan perhatikan urutan kata.";if(/\b(i am|i'm|i went|i like|i usually|i have|i work|today i)\b/i.test(a))note="Bagus! Jawabanmu sudah memakai pola kalimat yang umum. Periksa lagi ejaan dan tanda baca.";showResult("Jawabanmu",a,"Catatan awal: "+note+" Versi ini belum memakai pemeriksa grammar AI.");setStatus("Jawaban disimpan ke progres belajar.");};
+$("clearHistory").onclick=()=>{if(confirm("Hapus seluruh riwayat latihan yang tersimpan di browser ini?")){history=[];save()}};
+renderQuestion();renderProgress();
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+}
+</script></body></html>
