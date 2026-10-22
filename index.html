@@ -56,7 +56,45 @@ const today=new Date(), dayIndex=Math.floor(Date.UTC(today.getFullYear(),today.g
 const q=qs[dayIndex]; const $=id=>document.getElementById(id);
 let history=JSON.parse(localStorage.getItem("dailyEnglishHistory")||"[]");
 function renderQuestion(){ $("question").textContent=q[0];$("meaning").textContent=q[1];$("hint").textContent=q[2];$("phrase").textContent=q[3];$("phraseMeaning").textContent=q[4];$("dayLabel").textContent="PERTANYAAN HARI INI · "+today.toLocaleDateString("id-ID",{day:"numeric",month:"long"}); }
-function say(text,lang="en-US"){if(!("speechSynthesis" in window)){setStatus("Audio tidak didukung browser ini.");return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=.88;speechSynthesis.speak(u)}
+
+function say(text, lang = "en-US") {
+  if (!("speechSynthesis" in window)) {
+    setStatus("Audio tidak didukung browser ini.");
+    return;
+  }
+
+  const synth = window.speechSynthesis;
+  synth.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(String(text));
+  utterance.lang = lang;
+  utterance.rate = 0.85;
+  utterance.pitch = 1;
+  utterance.volume = 1;
+
+  const voices = synth.getVoices();
+  const exactVoice = voices.find(
+    voice => voice.lang.toLowerCase() === lang.toLowerCase()
+  );
+  const languageVoice = voices.find(
+    voice => voice.lang.toLowerCase().startsWith(
+      lang.split("-")[0].toLowerCase()
+    )
+  );
+
+  if (exactVoice || languageVoice) {
+    utterance.voice = exactVoice || languageVoice;
+  }
+
+  utterance.onstart = () => setStatus("Audio sedang diputar…");
+  utterance.onend = () => setStatus("Audio selesai.");
+  utterance.onerror = () => {
+    setStatus("Audio gagal diputar. Coba tekan tombol Dengarkan lagi.");
+  };
+
+  synth.resume();
+  synth.speak(utterance);
+}
 function setStatus(t){$("status").textContent=t}
 function save(){localStorage.setItem("dailyEnglishHistory",JSON.stringify(history));renderProgress()}
 function renderProgress(){const days=new Set(history.map(x=>x.date)).size;$("streak").textContent=days;$("daysStat").textContent=days;$("answersStat").textContent=history.length;$("wordsStat").textContent=history.reduce((a,x)=>a+(x.answer.trim().match(/\S+/g)||[]).length,0);$("history").innerHTML=history.length?history.slice().reverse().slice(0,20).map(x=>`<div class="history"><b>${escapeHtml(x.question)}</b><div>${escapeHtml(x.answer)}</div><div class="small">${escapeHtml(x.date)}${x.translation?" · Terjemahan tersedia":""}</div></div>`).join(""):'<p class="small">Belum ada latihan. Jawab pertanyaan pertamamu hari ini!</p>'}
