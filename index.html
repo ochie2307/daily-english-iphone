@@ -72,11 +72,30 @@ function say(text, lang = "en-US") {
   utterance.volume = 1;
 
   const voices = synth.getVoices();
-  const language = lang.split("-")[0].toLowerCase();
-  const voice =
-    voices.find(v => v.lang.toLowerCase() === lang.toLowerCase()) ||
-    voices.find(v => v.lang.toLowerCase().startsWith(language));
+  
+function say(text, lang = "en-US") {
+  const audio = new Audio();
+  const language = lang.toLowerCase().startsWith("id")
+    ? "id"
+    : "en";
 
+  audio.src =
+    "https://translate.google.com/translate_tts" +
+    "?ie=UTF-8&client=tw-ob&tl=" +
+    language +
+    "&q=" +
+    encodeURIComponent(String(text));
+
+  audio.onplaying = () => setStatus("Audio sedang diputar.");
+  audio.onended = () => setStatus("Audio selesai.");
+  audio.onerror = () => {
+    setStatus("Audio online gagal. Periksa internet dan coba lagi.");
+  };
+
+  audio.play().catch(() => {
+    setStatus("Audio tidak dapat diputar. Coba tekan lagi.");
+  });
+}
   if (voice) utterance.voice = voice;
 
   utterance.onstart = () => setStatus("Audio mulai diputar.");
